@@ -1,0 +1,9 @@
+<div class="announcement">
+  <% Announcement.current(cookies.signed[:hidden_announcement_ids]).each do |announcement| %>
+    <%= stylesheet_link_tag 'announcements.css' %>
+    <div id="announcement_<%= announcement.id %>" style="font-size: <%= announcement.font_size %>px !important; color: <%= announcement.color %>; background-color: <%= announcement.bg_color %>">
+      <%= announcement.message.html_safe %>
+      <%= link_to "Hide", hide_announcement_path(announcement), remote: true, class: 'my-class' %>
+    </div>
+  <% end %>
+</div>

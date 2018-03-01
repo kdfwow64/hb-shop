@@ -1,0 +1,7 @@
+<h3>New Announcement</h3>
+
+<%= form_for(@announcement, :as => :announcement, :url => admin_settings_announcements_path(@announcement)) do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>
+
+<%= link_to "Back to List", admin_settings_announcements_path, class: "button secondary" %>

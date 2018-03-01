@@ -1,0 +1,36 @@
+<h1> Announcement </h1>
+
+<p>
+  <strong>Message:</strong>
+  <%= @announcement.message.html_safe %>
+</p>
+
+<p>
+  <strong>Starts at:</strong>
+  <%= @announcement.display_start_time %>
+</p>
+
+<p>
+  <strong>Ends at:</strong>
+  <%= @announcement.display_end_time %>
+</p>
+
+<p>
+  <strong>Text Color:</strong>
+  <%= @announcement.color %>
+</p>
+
+<p>
+  <strong>Text Size:</strong>
+  <%= @announcement.font_size %>
+</p>
+
+<p>
+  <strong>Background Color:</strong>
+  <%= @announcement.bg_color %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_admin_settings_announcement_path(@announcement), :class => 'button' %> |
+  <%= link_to "View All", admin_settings_announcements_path, :class => 'button' %>
+</p>

@@ -1,0 +1,203 @@
+<% content_for :head do -%>
+  <%= stylesheet_link_tag 'reviews.css' %>
+<% end %>
+<% content_for :bottom do -%>
+  <%= javascript_include_tag "reviews.js" %>
+<% end %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<div style="margin:auto;">
+<div class="rating_show_div">
+	<div class="top">
+		<span>Select a brand</span><br>
+		<select>
+			<% @brand_list.each do |brand| %>
+			<option><%= brand.name %></option>
+			<% end %>
+		</select>
+	</div>
+
+	<div class = "tab">
+		<% @products.each do |prod| %>
+		<button class = "tablinks" onclick = "openCity(event,'<%=prod.name%>')"><%=prod.name%></button>
+		<% end %>
+	</div>
+
+	<% @products.each do |prod| %>
+	<div id="<%= prod.name %>" class="tabcontent">
+	<div class="first_div">
+		<div class="first_average_div">
+			<h3><%=prod.name%> Review</h3>
+			<div class="star_show">
+				<% pp =20* @rates[prod.id]/@count[prod.id] %>
+
+				<div class="star-ratings-sprite">
+					<span style="width:<%=pp%>%;" class="star-ratings-sprite-rating"></span>
+				</div>
+				<span style="padding-top: 5px;padding-left: 5px;float: left;"><%= @rates[prod.id]/@count[prod.id]%>/5 (<%= @count[prod.id]%>)</span>
+			</div>
+			<div class="progress_bars">
+				<div class="progress_bar1">
+					<% t = 5 %>
+					<% pp =100* @values[t][prod.id]/@count[prod.id] %>
+					<span style="float: left;">5 Star</span>
+					<div class="reviews-stats-table-rating-bar-background" data-rating="5" style="width: 100px; margin-left: 10px;margin-right: 8px;">
+						<div class="reviews-stats-table-rating-bar" data-rating="5" style="width: <%=pp%>%;"></div>
+					</div>
+					<span><%= @values[t][prod.id]%></span>
+				</div>
+				<div class="progress_bar1">
+					<% t = 4 %>
+					<% pp = 100* @values[t][prod.id]/@count[prod.id] %>
+					<span style="float: left;">4 Star</span>
+					<div class="reviews-stats-table-rating-bar-background" data-rating="5" style="width: 100px; margin-left: 10px;margin-right: 8px;">
+						<div class="reviews-stats-table-rating-bar" data-rating="5" style="width: <%=pp%>%;"></div>
+					</div>
+					<span><%= @values[t][prod.id]%></span>
+				</div>
+				<div class="progress_bar1">
+					<% t = 3 %>
+					<% pp = 100*@values[t][prod.id]/@count[prod.id] %>
+					<span style="float: left;">3 Star</span>
+					<div class="reviews-stats-table-rating-bar-background" data-rating="5" style="width: 100px; margin-left: 10px;margin-right: 8px;">
+						<div class="reviews-stats-table-rating-bar" data-rating="5" style="width: <%=pp%>%;"></div>
+					</div>
+					<span><%= @values[t][prod.id]%></span>
+				</div>
+				<div class="progress_bar1">
+					<% t = 2 %>
+					<% pp = 100*@values[t][prod.id]/@count[prod.id] %>
+					<span style="float: left;">2 Star</span>
+					<div class="reviews-stats-table-rating-bar-background" data-rating="5" style="width: 100px; margin-left: 10px;margin-right: 8px;">
+						<div class="reviews-stats-table-rating-bar" data-rating="5" style="width: <%=pp%>%;"></div>
+					</div>
+					<span><%= @values[t][prod.id]%></span>
+				</div>
+				<div class="progress_bar1">
+					<% t = 1 %>
+					<% pp = 100* @values[t][prod.id]/@count[prod.id] %>
+					<span style="float: left;">1 Star</span>
+					<div class="reviews-stats-table-rating-bar-background" data-rating="5" style="width: 100px; margin-left: 10px;margin-right: 8px;">
+						<div class="reviews-stats-table-rating-bar" data-rating="5" style="width: <%=pp%>%;"></div>
+					</div>
+					<span><%= @values[t][prod.id]%></span>
+				</div>
+			</div>
+		</div>
+		<div class="first_image_div">
+			<div class="">
+				
+			</div>
+		</div>
+		<div class="first_buy_div">
+			<button >Buy</button>
+		</div>
+	</div>
+	<div class="second_div"  style="text-align: center;">
+		<h2><span style="margin-top: 20px; float: left;margin-left: 300px;">OUR REVIEW POLICY</span></h2>
+	</div>
+	<div class="third_div">
+		<div class="third_filter_div">
+			<select>
+				<option>Filter</option>
+			</select>
+		</div>
+		<div class="third_leave_div">
+			
+			<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#myModal">Leave a review</button>
+		</div>
+	</div>
+	<div class="forth_div">
+		<div class="forth_first_div">
+			<% pp = 20* @user_rates[prod.id]/@user_counts[prod.id]%>
+			<div class="star-ratings-sprite">
+				<span style="width:<%=pp%>%;" class="star-ratings-sprite-rating"></span>
+			</div><br>
+			<span><%=@user.first_name%></span><br>
+			<span><%=@country_name%></span><br>
+			<span><%=@user_reviews[prod.id].updated_at.strftime('%v')%></span>
+		</div>
+		<div class="forth_second_div">
+			<span class="title"><%=@user_reviews[prod.id].title%></span><br>
+			<span><%=@user_reviews[prod.id].content%></span>
+		</div>
+	</div>
+
+	</div>
+
+
+	<div class="modal fade"  id="myModal">
+	    <div class="modal-dialog" >
+	        <div class="modal-content" style="width: 154%;">
+		      	<div class="modal-header">
+				    <h4 class="modal-title">Review</h4>
+				    <button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body">
+					<div class="review_div" id="review_edit_div">
+						<%= form_tag( reviews_path,
+					                          html:  {class: 'custom'},
+					                          id:    'dfd') do  %>
+					    <div style="height: 120px;border-bottom: solid 1px;">
+							<div class="subject_div"><h2 ">RATING</h2><h3>*</h3></div>
+							<div class="rating_first_div">
+								<input type="hidden" name="review[rating]" id="star_value">
+								<input type="hidden" name="review[product_id]" value="<%= prod.id%>" id="product_id">
+								<input type="hidden" name="review[user_id]" value="<%=@user.id%>" id="user_id">
+								<div >
+									<span class="star_span">★★★★★</span><br>
+									I love it
+								</div>
+								<div >
+									<span class="star_span">★★★★</span><br>
+									I like it
+								</div>
+								<div >
+									<span class="star_span">★★★</span><br>
+									It's okay
+								</div>
+								<div >
+									<span class="star_span">★★</span><br>
+									I don't like it
+								</div>
+								<div >
+									<span class="star_span">★</span><br>
+									I hate it
+								</div>
+							</div>
+						</div>
+						<div style="height: 120px; margin-top: 30px;">
+							<div class="subject_div"><h2>TITLE</h2><h3>*</h3></div>
+							<div class="rating_second_div">
+								<input type="text" name="review[title]" id="rating_title" placeholder="   Overall impression">
+							</div>
+						</div>
+						<div style="height: 240px; margin-bottom: 20px;">
+							<div class="subject_div"><h2>REVIEW</h2><h3>*</h3></div>
+							<div class="rating_third_div">
+								<textarea name="review[content]" placeholder="   did you enjoy our product? what did you like the most?"></textarea>
+							</div>
+						</div>
+
+					<%= submit_tag 'Submit', class: 'submit_btn' %>
+					<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<% end %>
+</div>
+</div>
+
+
+
+
+

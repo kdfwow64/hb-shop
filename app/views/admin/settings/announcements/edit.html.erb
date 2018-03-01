@@ -1,0 +1,8 @@
+<h1> Edit Announcement </h1>
+
+<%= form_for(@announcement, :as => :announcement, :url => admin_settings_announcement_path(@announcement)) do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>
+
+<%= link_to 'Show', admin_settings_announcement_path( @announcement ), :class => 'button secondary' %>
+<%= link_to 'View All', admin_settings_announcements_path, :class => 'button secondary' %>

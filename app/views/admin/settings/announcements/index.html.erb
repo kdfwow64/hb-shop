@@ -1,0 +1,34 @@
+<div class="admin_title_header clearfix">
+  <h3>Announcements</h3>
+  <%= link_to "New Announcement", new_admin_settings_announcement_path, class: 'button' %>
+</div>
+<div class="admin_announcements">
+  <table class='hover'>
+    <thead>
+    <tr class='odd'>
+      <th class='column1_header'>Message</th>
+      <th>Starts at</th>
+      <th>Ends at</th>
+      <th>Deleted At</th>
+      <th>Active/Inactive</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+    <% for announcement in @announcements %>
+      <tr class='<%= cycle("odd", "")%>'>
+        <td><%= announcement.message.html_safe %></td>
+        <td><%= announcement.display_start_time %></td>
+        <td><%= announcement.display_end_time %></td>
+        <td><%= announcement.deleted_at %></td>
+        <td><%= announcement.deleted? ? 'Inactive' : 'Active' %></td>
+        <td><%= link_to "View", admin_settings_announcement_path(announcement) %></td>
+        <td><%= link_to "Edit", edit_admin_settings_announcement_path(announcement) %></td>
+        <td>
+          <% unless announcement.deleted? %>
+            <%= link_to "Delete", admin_settings_announcement_path(announcement), data: { confirm: 'Are you sure?' }, method: :delete %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

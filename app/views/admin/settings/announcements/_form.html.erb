@@ -1,0 +1,47 @@
+<% if @announcement.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@announcement.errors.count, "error") %> prohibited this coupon from being saved:</h2>
+
+    <ul>
+    <% @announcement.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class='row'>
+  <ul class='column large-5 float-left'>
+    <li class="field">
+      <label>Message</label>
+      <%= f.text_area :message %>
+    </li>
+
+    <li class="field">
+      <label>Starts at</label>
+      <div class='date-select'>
+        <%= f.datetime_select :starts_at %>
+      </div>
+    </li>
+
+    <li class="field">
+      <label>Ends at</label>
+      <div class='date-select'>
+        <%= f.datetime_select :ends_at %>
+      </div>
+    </li>
+    <li class="field">
+      <label>Text Color</label>
+      <%= f.color_field :color %>
+    </li>
+    <li class="field">
+      <label>Text Size</label>
+      <%= f.number_field :font_size %>
+    </li>
+    <li class="field">
+      <label>Backgrounnd Color</label>
+      <%= f.color_field :bg_color %>
+    </li>
+  </ul>
+</div>
+<%= f.submit "Create", class: "button float-right" %>
